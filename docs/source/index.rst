@@ -110,7 +110,7 @@ which was used for the components.
   cd ufo
   mkdir build
   cd build
-  ecbuild -Dcrtm_SOURCE_DIR=\$HOME/projects/crtm -DIODA_PATH=\$HOME/projects/ioda/build -DCRTM_PATH=\$HOME/projects/crtm/build -DOOPS_PATH=\$HOME/projects/oops/build ~/projects/ufo
+  ecbuild -Dcrtm_SOURCE_DIR=$HOME/projects/crtm -DIODA_PATH=$HOME/projects/ioda/build -DCRTM_PATH=$HOME/projects/crtm/build -DOOPS_PATH=$HOME/projects/oops/build ~/projects/ufo
   make -j4
   ctest
 
