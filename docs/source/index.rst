@@ -21,6 +21,22 @@ This document is meant to show the user how to prepare their OS X operating
 system (iMac, MacBook, etc.) for compiling UFO on their system, and then how
 to run the build of the UFO code.
 
+.. index:: Background
+
+===============
+Background
+===============
+
+The Unified Forward Operator (UFO) is the software that implements the "observation operators"
+piece of the data assimilation cost function.
+
+The data assimilation cost function is:
+
+.. math::
+  J(x_0) = \left\{\sum_{i=0}^{N} [H(x_i) - y_i]^T R^{-1} [H(x_i) -y_i]\right\} + (x_o - x_b)^T B^{-1} (x_o - X_b)
+
+where the observation operatores (UFO) are defined by :math:`H(x)`.
+
 .. index:: Prepare the Mac with third party software
 
 =============================================

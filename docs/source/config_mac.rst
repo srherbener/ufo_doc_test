@@ -17,7 +17,8 @@ the need for superuser privilages.
 
 .. index:: Install homebrew
 
-To install homebrew itself on your Mac, run the following Ruby command.
+To install homebrew itself on your Mac, run the following Ruby command (bash syntax is
+being shown in the example below).
 
 .. code:: bash
 
