@@ -1,0 +1,150 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Configuring the EC tools on the Mac for building UFO &#8212; Building UFO in OS X 1.0.1 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Installing third party software on the Mac for building UFO" href="config_mac.html" /> 
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="config_mac.html" title="Installing third party software on the Mac for building UFO"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Building UFO in OS X 1.0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="configuring-the-ec-tools-on-the-mac-for-building-ufo">
+<h1>Configuring the EC tools on the Mac for building UFO<a class="headerlink" href="#configuring-the-ec-tools-on-the-mac-for-building-ufo" title="Permalink to this headline">¶</a></h1>
+<p>After <a class="reference external" href="/config_mac">configuring your Mac</a>, the next step is to build the EC
+tools which will then be used to build UFO and its components.
+The primary tool that you will need is “ecbuild” which
+provides a comprehensive set of <a class="reference external" href="https://cmake.org/">CMake</a> extensions
+for software compiliation, test and installation.</p>
+<p>The packages for this step live on <a class="reference external" href="https://github.com/">GitHub</a> in respositories
+belonging to user “UCAR”.
+The general process is to clone the GitHub repository, create a build directory
+(i.e., “out-of-source” style of build), run cmake followed by “make”, “ctest” and
+“make install”.
+This sequence will download source code, compile the code, run unit tests and
+finally install the newly created binaries and libraries in /usr/local.</p>
+<p id="index-0">The first step is to create the “ecbuild” system which will subsequently be used
+to build all other packages.
+For the following examples, it will be assumed that the user will build all of their
+packages in a subdirectory of their home directory called “projects”,
+($HOME/projects).
+Additionally, it is assumed that for each package the user will run the build
+process in a subdirectory of that package called “build”.
+In actuality, the ecbuild/CMake system is quite flexible in regard to where the
+user can locate their builds and the only restriction is that the build location
+live outside the package source directory.</p>
+<div class="code bash highlight-default"><div class="highlight"><pre><span></span>cd $HOME/projects
+git clone https://github.com/UCAR/ecbuild.git
+git checkout master    # make sure on branch &quot;master&quot;
+cd ecbuild
+mkdir build
+cd build
+cmake $HOME/projects/ecbuild   # Check CMakeFiles/CMake*.log for errors/warnings
+make
+make install
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>If you have a Mac with multiple cores, the make process can be sped up
+(via parallel processing) by running “make -jN”, where N is the number
+of processes to use for running the job.</p>
+<p class="last">The command “make VERBOSE=1” can be run if you want to see the commands that
+the make process is issuing.</p>
+</div>
+<p id="index-1">Once ecbuild is installed, the EC tool build and install process can be completed
+by building “eckit” and “fckit”.
+These two packages are built in an identical fashion, therefore only eckit will be
+shown as an example.
+Also, it will be assumed that the Mac has 4 cores available for the make process.</p>
+<div class="code bash highlight-default"><div class="highlight"><pre><span></span>cd $HOME/projects
+git clone https://github.com/UCAR/eckit.git
+git checkout master    # make sure on branch &quot;master&quot;
+cd eckit
+mkdir build
+cd build
+ecbuild $HOME/projects/eckit   # Check ecbuild.log for errors/warnings
+make -j4
+ctest
+make install
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="config_mac.html"
+                        title="previous chapter">Installing third party software on the Mac for building UFO</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="config_mac.html" title="Installing third party software on the Mac for building UFO"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Building UFO in OS X 1.0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Stephen Herbener.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.6.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,195 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Installing third party software on the Mac for building UFO &#8212; Building UFO in OS X 1.0.1 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Configuring the EC tools on the Mac for building UFO" href="config_ec_tools.html" />
+    <link rel="prev" title="Building UFO in OS X" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="config_ec_tools.html" title="Configuring the EC tools on the Mac for building UFO"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Building UFO in OS X"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Building UFO in OS X 1.0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="installing-third-party-software-on-the-mac-for-building-ufo">
+<h1>Installing third party software on the Mac for building UFO<a class="headerlink" href="#installing-third-party-software-on-the-mac-for-building-ufo" title="Permalink to this headline">¶</a></h1>
+<p>Many installer tools for OS X (MacBook, iMac, etc.) exist.
+MacPorts and homebrew are two popular examples.
+Homebrew has been succussfully used for installing tools on the Mac for the purpose
+of compiling software (e.g., UFO) in the JEDI project.
+For this reason, it is recommended to use homebrew for configuring your Mac.</p>
+<p>By default, homebrew installs packages into /usr/local.
+It is recommended to stick with the /usr/local install location since many creators
+of homebrew packages are used to using /usr/local as their target install location.
+It is recommended to change ownership of the subdirectories of /usr/local
+to your user id.
+Once this is done, you will be able to manage installations with homebrew without
+the need for superuser privilages.</p>
+<p id="index-0">To install homebrew itself on your Mac, run the following Ruby command (bash syntax is
+being shown in the example below).</p>
+<div class="code bash highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">ruby</span> <span class="o">-</span><span class="n">e</span> <span class="s2">&quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Homebrew is Ruby based and the installation scripts (called “formulas”)
+are Ruby scripts.</p>
+</div>
+<p>Once installed, the primary command for the user is “brew”.
+See the homebrew <a class="reference external" href="https:/brew.sh/">website</a> for details, or enter
+the command “man brew” for even more details.</p>
+<p id="index-1">The first step is to install the gcc version 7 compilers package.
+This is accomplished by running:</p>
+<div class="code bash highlight-default"><div class="highlight"><pre><span></span><span class="n">brew</span> <span class="n">install</span> <span class="n">gcc</span>
+</pre></div>
+</div>
+<p>This results in the gcc tools being installed in /usr/local/bin, but they are
+suffixed with “-7” so that they do not conflict with existing installed compilers.
+However, the existing compilers (likely the clang versions in /usr/bin) are not
+compatible with some of the libraries used by UFO.
+To work around this, create the following links in /usr/local/bin:</p>
+<div class="code bash highlight-default"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="nb">bin</span>
+<span class="n">ln</span> <span class="o">-</span><span class="n">s</span> <span class="n">c</span><span class="o">++-</span><span class="mi">7</span> <span class="n">c</span><span class="o">++</span>
+<span class="n">ln</span> <span class="o">-</span><span class="n">s</span> <span class="n">gcc</span><span class="o">-</span><span class="mi">7</span> <span class="n">cc</span>
+<span class="n">ln</span> <span class="o">-</span><span class="n">s</span> <span class="n">cpp</span><span class="o">-</span><span class="mi">7</span> <span class="n">cpp</span>
+<span class="n">ln</span> <span class="o">-</span><span class="n">s</span> <span class="n">g</span><span class="o">++-</span><span class="mi">7</span> <span class="n">g</span><span class="o">++</span>
+<span class="n">ln</span> <span class="o">-</span><span class="n">s</span> <span class="n">gcc</span><span class="o">-</span><span class="mi">7</span> <span class="n">gcc</span>
+</pre></div>
+</div>
+<p>And make sure that “/usr/local/bin” is first in your PATH environment variable.</p>
+<p id="index-2">UFO uses the third party libraries <a class="reference external" href="http://eigen.tuxfamily.org/">Eigen</a>
+and <a class="reference external" href="http://www.boost.org/">Boost</a>.
+Eigen provides C++ templates for linear algebra, and Boost provides a wide range
+of C++ libraries that have been peer reviewed.
+UFO is utilizing Boost libraries that assist with unit testing.
+To load Eigen and Boost, run the following:</p>
+<div class="code bash highlight-default"><div class="highlight"><pre><span></span><span class="n">brew</span> <span class="n">install</span> <span class="n">eigen</span>
+<span class="n">brew</span> <span class="n">install</span> <span class="o">--</span><span class="n">cc</span><span class="o">=</span><span class="n">gcc</span><span class="o">-</span><span class="mi">7</span> <span class="n">boost</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The –cc=gcc-7 option for the boost install is utilized so that the boost
+libraries will be installed using the c++11 code standard.
+This is necessary to get the proper function name mangling in the boost link
+libraries for the downstream UFO link steps.</p>
+</div>
+<p id="index-3">The UFO build system is based on <a class="reference external" href="https://cmake.org/">CMake</a>.
+To install CMake, run:</p>
+<div class="code bash highlight-default"><div class="highlight"><pre><span></span><span class="n">brew</span> <span class="n">install</span> <span class="n">cmake</span>
+</pre></div>
+</div>
+<p id="index-4">UFO used <a class="reference external" href="https://www.hdfgroup.org/">HDF5</a>,
+<a class="reference external" href="https://www.unidata.ucar.edu/software/netcdf/">netCDF</a> and
+MPI (e.g., <a class="reference external" href="https://www.mpich.org/">mpich</a>,
+<a class="reference external" href="https://www.open-mpi.org/">openMPI</a>) libraries.
+To install these, run:</p>
+<div class="code bash highlight-default"><div class="highlight"><pre><span></span><span class="n">brew</span> <span class="n">install</span> <span class="n">hdf5</span>
+<span class="n">brew</span> <span class="n">install</span> <span class="n">netcdf</span>
+<span class="n">brew</span> <span class="n">install</span> <span class="n">mpich</span>
+</pre></div>
+</div>
+<p id="index-5">When testing the process of compiling UFO on the Mac, it was found that the
+<a class="reference external" href="https://www.anaconda.com/">Anaconda</a> installation of python was not compatible.
+It may be useful to fix the Anaconda incompatibility, but as of this time a
+solution has not been found.
+Homebrew can install python and it is recommended to install version 3 which
+can be accomplished by running:</p>
+<div class="code bash highlight-default"><div class="highlight"><pre><span></span><span class="n">brew</span> <span class="n">install</span> <span class="n">python3</span>
+</pre></div>
+</div>
+<p id="index-6">Additional packages, which are optional, that you might find handy are as follows:</p>
+<div class="code bash highlight-default"><div class="highlight"><pre><span></span><span class="n">brew</span> <span class="n">install</span> <span class="n">tkdiff</span>    <span class="c1"># a nice GUI for diff</span>
+<span class="n">brew</span> <span class="n">install</span> <span class="n">graphviz</span>  <span class="c1"># for creating diagrams, flow charts, etc.</span>
+<span class="n">brew</span> <span class="n">install</span> <span class="n">macvim</span>    <span class="c1"># a nice GUI for vim (&quot;vi improved&quot;)</span>
+<span class="n">brew</span> <span class="n">install</span> <span class="n">jupyter</span>   <span class="c1"># notebooks</span>
+<span class="n">brew</span> <span class="n">install</span> <span class="n">iterm</span>     <span class="c1"># nice terminal emulator (this command loads iTerm2)</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Building UFO in OS X</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="config_ec_tools.html"
+                        title="next chapter">Configuring the EC tools on the Mac for building UFO</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="config_ec_tools.html" title="Configuring the EC tools on the Mac for building UFO"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Building UFO in OS X"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Building UFO in OS X 1.0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Stephen Herbener.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.6.
+    </div>
+  </body>
+</html>
