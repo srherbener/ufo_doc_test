@@ -4,7 +4,7 @@
    contain the root `toctree` directive.
 
 Building UFO in OS X
-================================================
+====================
 
 .. toctree::
    :maxdepth: 2
@@ -13,9 +13,8 @@ Building UFO in OS X
    config_mac
    config_ec_tools
 
-==============
 Purpose
-==============
+=======
 
 This document is meant to show the user how to prepare their OS X operating
 system (iMac, MacBook, etc.) for compiling UFO on their system, and then how
@@ -23,9 +22,8 @@ to run the build of the UFO code.
 
 .. index:: Background
 
-===============
 Background
-===============
+==========
 
 The Unified Forward Operator (UFO) is the software that implements the "observation operators"
 piece of the data assimilation cost function.
@@ -39,9 +37,8 @@ where the observation operatores (UFO) are defined by :math:`H(x)`.
 
 .. index:: Prepare the Mac with third party software
 
-=============================================
 Prepare the Mac with third party software
-=============================================
+=========================================
 
 In preparation for building UFO, the Mac needs to be configured properly with
 third party software and the EC build tools.
@@ -58,9 +55,8 @@ This is accomplished in two steps:
 
 .. index:: Build UFO components
 
-=========================
 Build UFO components
-=========================
+====================
 
 Upon completion of the Mac configuration, you should be in good shape to
 build UFO.
@@ -109,9 +105,8 @@ below.
 
 .. index:: Build UFO
 
-=============
 Build UFO 
-=============
+=========
 
 Once CRTM, OOPS and IODA are successfully built (tests pass) UFO can
 then be compiled.
@@ -140,9 +135,8 @@ which was used for the components.
 
 .. index:: jedi-bundle
 
-====================
 jedi-bundle
-====================
+===========
 
 You may have noticed some awkwardness in the UFO build process.
 Specifically, the need to remember the proper Git branches for the

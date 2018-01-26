@@ -1,5 +1,5 @@
 Installing third party software on the Mac for building UFO
-==============================================================
+===========================================================
 
 Many installer tools for OS X (MacBook, iMac, etc.) exist.
 MacPorts and homebrew are two popular examples.
